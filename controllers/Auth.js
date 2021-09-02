@@ -1,6 +1,6 @@
 let express = require('express')
 let router = express.Router()
-const { User } = require('../models/User')
+const { User } = require('../models')
 
 router.get("", (req, res) => {
     res.send("Hello World!@#!@#")
@@ -8,6 +8,7 @@ router.get("", (req, res) => {
 
 router.post("/create/:name", async (req, res) => {
     let message 
+    console.log(User)
     try {
         const user = await User.create({
             username: req.params.name
@@ -18,9 +19,11 @@ router.post("/create/:name", async (req, res) => {
         }
     } catch (err){
         console.log(err)
-        message = 'Failed to Create User'
+        message = {
+            msg:'Failed to Create User'
+        }
     }
-    res.send(JSON.stringify(message))
+    res.json(message)
 })
 
 module.exports = router

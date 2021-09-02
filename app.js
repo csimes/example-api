@@ -3,18 +3,16 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-/// App Configuration
-// Routes
-const auth = require('./controllers/Auth')
-app.use("/auth", auth)
+;(async() => {
+  app.use(express.json())
 
-const post = require('./controllers/Post')
-app.use('/post', post)
+  const auth = require('./controllers/Auth')
+  app.use("/auth", auth)
 
-// Sync DB *with all route needed models*
-require("./db").sequelize.sync()
+  const post = require('./controllers/Post')
+  app.use('/post', post)
 
-// Stand up the app on a port
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+  })
+})()
